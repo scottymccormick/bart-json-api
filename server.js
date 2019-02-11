@@ -9,6 +9,8 @@ const PORT       = process.env.PORT || 9000;
 // Require DB and retrieve models
 const db = require('./models');
 
+const usersController = require('./controllers/usersController');
+
 app.use(session({
   secret: "the doors are closing, please stand clear of the doors",
   resave: false,
@@ -26,6 +28,8 @@ app.use(cors({
 app.get('/', (req, res) => {
   res.send('<h1>Reached BART API</h1>');
 });
+
+app.use('/api/users', usersController);
 
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`)
