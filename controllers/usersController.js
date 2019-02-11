@@ -47,7 +47,8 @@ router.post('/login', async (req, res) => {
       req.session.logged = true;
       console.log('session logged', req.session.logged);
       res.status(200).json({
-        message: 'Login successful'
+        message: 'Login successful',
+        body: foundUser.email
       });
     } else {
       console.log('not matched!');
