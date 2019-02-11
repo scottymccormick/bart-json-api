@@ -23,6 +23,10 @@ app.use(cors({
   optionsSuccessStatus: 200
 }));
 
+app.get('/', (req, res) => {
+  res.send('<h1>Reached BART API</h1>');
+});
+
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`)
-})
+});
