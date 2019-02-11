@@ -2,6 +2,7 @@ const express    = require('express');
 const app        = express();
 const bodyParser = require('body-parser');
 const session    = require('express-session');
+const bcrypt     = require('bcryptjs');
 const PORT       = process.env.PORT || 9000;
 
 // Require DB and retrieve models
