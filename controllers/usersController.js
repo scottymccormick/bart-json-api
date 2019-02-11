@@ -1,5 +1,6 @@
 const express = require('express');
 const router  = express.Router();
+const bcrypt  = require('bcryptjs');
 
 const db = require('../models');
 
@@ -11,7 +12,15 @@ router.get('/', (req, res) => {
 // User Create
 router.post('/', async (req, res) => {
   try {
-    createdUser = await db.User.create(req.body);
+    const password = req.body.password;
+    const hashedPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+
+    const userDbEntry = {
+      email: req.body.email,
+      password: hashedPassword
+    }
+
+    createdUser = await db.User.create(userDbEntry);
     console.log(createdUser);
     res.send('Success')
 
