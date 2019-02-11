@@ -26,35 +26,56 @@ router.post('/register', async (req, res) => {
     req.session.email = createdUser.email;
     req.session.logged = true;
 
-    res.send('Success')
-
+    res.json({
+      status: 200,
+      message: 'Registration successful'
+    });
   } catch (err) {
     console.log(err);
     return err;
   }
 });
 
-// User Show
+// User Login
 router.post('/login', async (req, res) => {
   try {
     const foundUser = await db.User.findOne({email: req.body.email});
 
-    if (foundUser) {
-      if (bcrypt.compareSync(req.body.password, foundUser.password)) {
-        console.log('Matched passwords!')
-        req.session.email = foundUser.email;
-        req.session.logged = true;
-        console.log('session logged', req.session.logged);
-      } else {
-        console.log('not matched!');
-        console.log('session logged', req.session.logged);
-      }
+    if (foundUser && bcrypt.compareSync(req.body.password, foundUser.password)) {
+      console.log('Matched passwords!');
+      req.session.email = foundUser.email;
+      req.session.logged = true;
+      console.log('session logged', req.session.logged);
+      res.json({
+        status: 200,
+        message: 'Login successful'
+      });
+    } else {
+      console.log('not matched!');
+      console.log('session logged', req.session.logged);
+      res.json({
+        status: 401,
+        message: 'Email or password are incorrect'
+      });
     }
-    res.json(foundUser);
   } catch (err) {
     console.log(err);
     return err;
   }
+});
+
+// User Logout
+router.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json({
+        status: 200,
+        message: 'Logout successful'
+      });
+    }
+  })
 })
 
 module.exports = router;
