@@ -46,15 +46,13 @@ router.post('/login', async (req, res) => {
       req.session.email = foundUser.email;
       req.session.logged = true;
       console.log('session logged', req.session.logged);
-      res.json({
-        status: 200,
+      res.status(200).json({
         message: 'Login successful'
       });
     } else {
       console.log('not matched!');
       console.log('session logged', req.session.logged);
-      res.json({
-        status: 401,
+      res.status(401).json({
         message: 'Email or password are incorrect'
       });
     }
