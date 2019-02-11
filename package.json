@@ -1,0 +1,28 @@
+{
+  "name": "bart-json-api",
+  "version": "1.0.0",
+  "description": "API Serving [React BART App](https://github.com/scottymccormick/react-bart-client)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scottymccormick/bart-json-api.git"
+  },
+  "author": "Scotty McCormick",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scottymccormick/bart-json-api/issues"
+  },
+  "homepage": "https://github.com/scottymccormick/bart-json-api#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "mongoose": "^5.4.11"
+  }
+}
