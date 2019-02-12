@@ -22,7 +22,7 @@ router.get('/etd/:abbr', (req, res) => {
     .then((response) => {
       console.log(response.status)
       const stationEtd = response.data.root.station[0];
-      res.json(stationEtd.etd);
+      res.json(stationEtd);
     })
     .catch((err) => {
       res.send(err);
