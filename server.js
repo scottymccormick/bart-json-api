@@ -9,6 +9,7 @@ const PORT       = process.env.PORT || 9000;
 const db = require('./models');
 
 const usersController = require('./controllers/usersController');
+const stationsController = require('./controllers/stationsController');
 
 app.use(session({
   secret: "the doors are closing, please stand clear of the doors",
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/users', usersController);
+app.use('/api/stations', stationsController);
 
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`)
