@@ -9,10 +9,14 @@ mongoose.connect(connectionString, {
 
 mongoose.connection.on('connected', () => {
   console.log(`Mongoose connected on ${connectionString}`)
-})
+});
 mongoose.connection.on('error', (err) => {
   console.log(`Mongoose error: ${err}`);
-})
+});
 mongoose.connection.on('disconnected', () => {
   console.log(`Mongoose disconnected from ${connectionString}`)
-})
+});
+
+module.exports = {
+  User: require('./User'),
+}
