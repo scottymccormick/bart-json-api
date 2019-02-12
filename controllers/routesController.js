@@ -4,7 +4,10 @@ const axios   = require('axios');
 
 router.get('/', (req, res) => {
   if (req.query.orig && req.query.dest) {
-    axios.get(`http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${req.query.orig}&dest=${req.query.dest}&json=y&key=${process.env.BART_API_KEY}`)
+    const cmdType = req.query.cmd || 'depart';
+    const date = req.query.date || 'now';
+    const time = req.query.tie || 'now';
+    axios.get(`http://api.bart.gov/api/sched.aspx?cmd=${cmdType}&orig=${req.query.orig}&dest=${req.query.dest}&date=${date}&time=${time}&a=4&b=0&json=y&key=${process.env.BART_API_KEY}`)
       .then((response) => {
         console.log(response.status);
         const scheduleInfo = response.data.root.schedule;
@@ -14,7 +17,7 @@ router.get('/', (req, res) => {
         res.send(err);
       });
   } else {
-    res.send('not enough query parameters');
+    res.json(400, 'Need more parameters');
   }
 })
 
