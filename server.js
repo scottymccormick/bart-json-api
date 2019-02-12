@@ -1,9 +1,13 @@
 const express    = require('express');
 const app        = express();
+const dotenv     = require('dotenv');
 const bodyParser = require('body-parser');
 const session    = require('express-session');
 const cors       = require('cors');
 const PORT       = process.env.PORT || 9000;
+
+// Config .env variables
+dotenv.config();
 
 // Require DB and retrieve models
 const db = require('./models');
