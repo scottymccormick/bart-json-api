@@ -17,6 +17,7 @@ router.post('/register', async (req, res) => {
 
     const userDbEntry = {
       email: req.body.email,
+      name: req.body.name,
       password: hashedPassword
     }
 
@@ -28,7 +29,11 @@ router.post('/register', async (req, res) => {
 
     res.json({
       status: 200,
-      message: 'Registration successful'
+      message: 'Registration successful',
+      body: {
+        email: createdUser.email,
+        name: createdUser.name,
+      }
     });
   } catch (err) {
     console.log(err);
