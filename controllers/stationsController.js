@@ -15,6 +15,19 @@ router.get('/', (req, res) => {
     .catch((err) => {
       res.send(err);
     })
+});
+
+// Stations show Estimated Time of Departures
+router.get('/etd/:abbr', (req, res) => {
+  axios.get(`http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${req.params.abbr}&json=y&key=${process.env.BART_API_KEY}`)
+    .then((response) => {
+      console.log(response)
+      const stationEtd = response.data.root.station[0];
+      res.json(stationEtd.etd);
+    })
+    .catch((err) => {
+      res.send(err);
+    })
 })
 
 module.exports = router;
