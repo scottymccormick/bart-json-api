@@ -85,13 +85,19 @@ router.get('/logout', (req, res) => {
 // User Favorites Index
 router.get('/favorites', async (req, res) => {
   try {
-    const allFavorites = await db.Favorite.find({});
-    res.json(200, allFavorites);
+    if (!req.query.email) {
+      const allFavorites = await db.Favorite.find({});
+      res.json(200, allFavorites);
+    } else {
+      const foundUser = await db.User.findOne({email: req.query.email});
+      const userFavorites = await db.Favorite.find({userId: foundUser._id});
+      res.json(200, userFavorites);
+    }
 
   } catch (error) {
     res.send(error);
   }
-})
+});
 
 // User Add Favorite
 router.post('/favorites', async (req, res) => {
