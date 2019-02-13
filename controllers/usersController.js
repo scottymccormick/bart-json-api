@@ -80,6 +80,11 @@ router.get('/logout', (req, res) => {
       });
     }
   })
-})
+});
+
+// User Add Favorite
+router.post('/favorites', (req, res) => {
+  res.json(200, req.body)
+});
 
 module.exports = router;
