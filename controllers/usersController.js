@@ -82,6 +82,17 @@ router.get('/logout', (req, res) => {
   })
 });
 
+// User Favorites Index
+router.get('/favorites', async (req, res) => {
+  try {
+    const allFavorites = await db.Favorite.find({});
+    res.json(200, allFavorites);
+
+  } catch (error) {
+    res.send(error);
+  }
+})
+
 // User Add Favorite
 router.post('/favorites', async (req, res) => {
 
@@ -91,14 +102,12 @@ router.post('/favorites', async (req, res) => {
       origin: req.body.origin,
       userId: foundUser._id
     }
-
     if (req.body.destination) favoriteDbEntry.destination = req.body.destination;
 
     const createdFavorite = await db.Favorite.create(favoriteDbEntry);
     console.log(createdFavorite);
 
-    res.json(200,
-    {
+    res.json(200,{
       body: createdFavorite
     });
 
