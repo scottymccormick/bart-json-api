@@ -14,6 +14,7 @@ const db = require('./models');
 
 const usersController = require('./controllers/usersController');
 const stationsController = require('./controllers/stationsController');
+const routesController = require('./controllers/routesController');
 
 app.use(session({
   secret: "the doors are closing, please stand clear of the doors",
@@ -35,6 +36,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', usersController);
 app.use('/api/stations', stationsController);
+app.use('/api/routes', routesController);
 
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`)
