@@ -83,15 +83,31 @@ router.get('/logout', (req, res) => {
 });
 
 // User Add Favorite
-router.post('/favorites', (req, res) => {
-  db.Favorite.create(req.body, (err, createdFavorite) => {
-    if (err) {
-      res.send(err)
-    } else {
-      console.log(createdFavorite);
-      res.json(createdFavorite);
+router.post('/favorites', async (req, res) => {
+
+  try {
+    const foundUser = await db.User.findOne({email: req.body.email});
+    const favoriteDbEntry = {
+      origin: req.body.origin,
+      userId: foundUser._id
     }
-  })
+
+    if (req.body.destination) favoriteDbEntry.destination = req.body.destination;
+
+    const createdFavorite = await db.Favorite.create(favoriteDbEntry);
+    console.log(createdFavorite);
+
+    res.json(200,
+    {
+      body: createdFavorite
+    });
+
+  } catch (error) {
+    res.json({
+      status: 400,
+      body: error
+    });
+  }
 });
 
 module.exports = router;
