@@ -84,7 +84,14 @@ router.get('/logout', (req, res) => {
 
 // User Add Favorite
 router.post('/favorites', (req, res) => {
-  res.json(200, req.body)
+  db.Favorite.create(req.body, (err, createdFavorite) => {
+    if (err) {
+      res.send(err)
+    } else {
+      console.log(createdFavorite);
+      res.json(createdFavorite);
+    }
+  })
 });
 
 module.exports = router;

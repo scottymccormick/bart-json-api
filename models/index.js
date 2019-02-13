@@ -19,4 +19,5 @@ mongoose.connection.on('disconnected', () => {
 
 module.exports = {
   User: require('./User'),
+  Favorite: require('./Favorite'),
 }
