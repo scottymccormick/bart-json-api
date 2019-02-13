@@ -27,8 +27,7 @@ router.post('/register', async (req, res) => {
     req.session.email = createdUser.email;
     req.session.logged = true;
 
-    res.json({
-      status: 200,
+    res.status(200).json({
       message: 'Registration successful',
       body: {
         email: createdUser.email,
@@ -74,10 +73,7 @@ router.get('/logout', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.json({
-        status: 200,
-        message: 'Logout successful'
-      });
+      res.status(204);
     }
   })
 });
@@ -91,7 +87,7 @@ router.get('/favorites', async (req, res) => {
     } else {
       const foundUser = await db.User.findOne({email: req.query.email});
       const userFavorites = await db.Favorite.find({userId: foundUser._id});
-      res.json(200, userFavorites);
+      res.status(200).json(userFavorites);
     }
 
   } catch (error) {
@@ -113,15 +109,10 @@ router.post('/favorites', async (req, res) => {
     const createdFavorite = await db.Favorite.create(favoriteDbEntry);
     console.log(createdFavorite);
 
-    res.json(200,{
-      body: createdFavorite
-    });
+    res.status(200).json(createdFavorite);
 
   } catch (error) {
-    res.json({
-      status: 400,
-      body: error
-    });
+    res.status(400).json(error);
   }
 });
 
