@@ -116,6 +116,18 @@ router.post('/favorites', async (req, res) => {
   }
 });
 
+// User Update Favorite
+router.put('/favorites/:id', async (req, res) => {
+  try {
+    const updatedFavorite = await db.Favorite.findByIdAndUpdate(
+      req.params.id, req.body, {new: true});
+
+    res.status(200).json(updatedFavorite);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
 // User Delete Favorite
 router.delete('/favorites/:id', async (req, res) => {
   try {
