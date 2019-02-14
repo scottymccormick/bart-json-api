@@ -51,8 +51,9 @@ router.post('/login', async (req, res) => {
       req.session.logged = true;
       console.log('session logged', req.session.logged);
       res.status(200).json({
-        message: 'Login successful',
-        body: foundUser.email
+        email: foundUser.email,
+        userId: foundUser._id,
+        quickStart: foundUser.quickStart
       });
     } else {
       console.log('not matched!');
@@ -77,6 +78,18 @@ router.get('/logout', (req, res) => {
     }
   })
 });
+
+// User Update
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedUser = await db.User.findByIdAndUpdate(
+      req.params.id, req.body, {new: true});
+
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+})
 
 // User Favorites Index
 router.get('/favorites', async (req, res) => {
@@ -115,6 +128,17 @@ router.post('/favorites', async (req, res) => {
     res.status(400).json(error);
   }
 });
+
+// User Show Favorite
+router.get('/favorites/:id', async (req, res) => {
+  try {
+    const foundFavorite = await db.Favorite.findById(req.params.id);
+
+    res.status(200).json(foundFavorite);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+})
 
 // User Update Favorite
 router.put('/favorites/:id', async (req, res) => {

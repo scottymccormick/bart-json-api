@@ -11,7 +11,11 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  name: String
+  name: String,
+  quickStart: {
+    type: Schema.Types.ObjectId,
+    ref: 'Favorite'
+  }
 });
 
 const User = mongoose.model('User', userSchema);
