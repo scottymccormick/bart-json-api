@@ -27,8 +27,7 @@ router.post('/register', async (req, res) => {
     req.session.email = createdUser.email;
     req.session.logged = true;
 
-    res.json({
-      status: 200,
+    res.status(200).json({
       message: 'Registration successful',
       body: {
         email: createdUser.email,
@@ -74,12 +73,70 @@ router.get('/logout', (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.json({
-        status: 200,
-        message: 'Logout successful'
-      });
+      res.status(204).json({message: 'success'});
     }
   })
-})
+});
+
+// User Favorites Index
+router.get('/favorites', async (req, res) => {
+  try {
+    if (!req.query.email) {
+      const allFavorites = await db.Favorite.find({});
+      res.json(200, allFavorites);
+    } else {
+      const foundUser = await db.User.findOne({email: req.query.email});
+      const userFavorites = await db.Favorite.find({userId: foundUser._id});
+      res.status(200).json(userFavorites);
+    }
+
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+// User Add Favorite
+router.post('/favorites', async (req, res) => {
+
+  try {
+    const foundUser = await db.User.findOne({email: req.body.email});
+    const favoriteDbEntry = {
+      origin: req.body.origin,
+      userId: foundUser._id
+    }
+    if (req.body.destination) favoriteDbEntry.destination = req.body.destination;
+
+    const createdFavorite = await db.Favorite.create(favoriteDbEntry);
+    console.log(createdFavorite);
+
+    res.status(200).json(createdFavorite);
+
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+// User Update Favorite
+router.put('/favorites/:id', async (req, res) => {
+  try {
+    const updatedFavorite = await db.Favorite.findByIdAndUpdate(
+      req.params.id, req.body, {new: true});
+
+    res.status(200).json(updatedFavorite);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
+
+// User Delete Favorite
+router.delete('/favorites/:id', async (req, res) => {
+  try {
+    // delete from user - quick look if applicable
+    const deletedFavorite = await db.Favorite.findByIdAndDelete(req.params.id);
+    res.status(200).json(deletedFavorite);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});
 
 module.exports = router;
