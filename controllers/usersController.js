@@ -129,6 +129,17 @@ router.post('/favorites', async (req, res) => {
   }
 });
 
+// User Show Favorite
+router.get('/favorites/:id', async (req, res) => {
+  try {
+    const foundFavorite = await db.Favorite.findById(req.params.id);
+
+    res.status(200).json(foundFavorite);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+})
+
 // User Update Favorite
 router.put('/favorites/:id', async (req, res) => {
   try {
