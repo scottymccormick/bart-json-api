@@ -158,6 +158,9 @@ router.delete('/favorites/:id', async (req, res) => {
   try {
     // delete from user - quick look if applicable
     const deletedFavorite = await db.Favorite.findByIdAndDelete(req.params.id);
+    const deletedQuickLook = await db.User.findByIdAndUpdate(deletedFavorite.userId, {
+      quickStart: null
+    })
     res.status(200).json(deletedFavorite);
   } catch (error) {
     res.status(400).json(error);
