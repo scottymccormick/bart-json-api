@@ -52,6 +52,7 @@ router.post('/login', async (req, res) => {
       console.log('session logged', req.session.logged);
       res.status(200).json({
         email: foundUser.email,
+        name: foundUser.name,
         userId: foundUser._id,
         quickStart: foundUser.quickStart
       });
