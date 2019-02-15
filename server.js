@@ -25,7 +25,7 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors({
-  origin: ['http://localhost', 'https://barttrack.herokuapp.com'],
+  origin: ['http://localhost:3000', 'https://barttrack.herokuapp.com'],
   credentials: true,
   optionsSuccessStatus: 200
 }));

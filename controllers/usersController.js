@@ -27,12 +27,17 @@ router.post('/register', async (req, res) => {
     req.session.email = createdUser.email;
     req.session.logged = true;
 
+    // res.status(200).json({
+    //   message: 'Registration successful',
+    //   body: {
+    //     email: createdUser.email,
+    //     name: createdUser.name,
+    //   }
+    // });
     res.status(200).json({
-      message: 'Registration successful',
-      body: {
-        email: createdUser.email,
-        name: createdUser.name,
-      }
+      email: createdUser.email,
+      name: createdUser.name,
+      userId: createdUser._id
     });
   } catch (err) {
     console.log(err);
